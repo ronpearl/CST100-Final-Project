@@ -19,10 +19,12 @@ public class NFLPlayer {
 	private int receptions = 0;
 	private int fieldGoalsMade = 0;
 	private int carries = 0;
-	private int yardsPerCarry = 0;
+	private double yardsPerCarry = 0;
 	private int totalYards = 0;
 	private int touchdowns = 0;
 	private int interceptions = 0;
+	private double yardsPerPass = 0;
+	private double yardsPerReception = 0;
 
 	NFLPlayer() {
 		// Instansiate class
@@ -59,7 +61,7 @@ public class NFLPlayer {
 	public int getCarries() {
 		return carries;
 	}
-	public int getYardsPerCarry() {
+	public double getYardsPerCarry() {
 		return yardsPerCarry;
 	}
 	public int getTotalYards() {
@@ -70,6 +72,12 @@ public class NFLPlayer {
 	}
 	public int getInterceptions() {
 		return interceptions;
+	}
+	public double getYardsPerPass() {
+		return yardsPerPass;
+	}
+	public double getYardsPerReception() {
+		return yardsPerReception;
 	}
 
 	// Setters
@@ -103,7 +111,7 @@ public class NFLPlayer {
 	public void setCarries(int plyrCarries) {
 		carries = plyrCarries;
 	}
-	public void setYardsPerCarry(int plyrYPC) {
+	public void setYardsPerCarry(double plyrYPC) {
 		yardsPerCarry = plyrYPC;
 	}
 	public void setTotalYards(int plyrTotalYds) {
@@ -114,5 +122,11 @@ public class NFLPlayer {
 	}
 	public void setInterceptions(int plyrInt) {
 		interceptions = plyrInt;
+	}
+	public void setYardsPerPass(double plyrYPP) {
+		yardsPerPass = plyrYPP;
+	}
+	public void setYardsPerReception(double plyrYPR) {
+		yardsPerReception = plyrYPR;
 	}
 }
