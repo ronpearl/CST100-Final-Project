@@ -1,6 +1,6 @@
 /** Program: NFL PLayer Class
 * File: NFLPlayer.java
-* Summary: 
+* Summary: Class to create players and their stats
 * Author: Ronald Pearl
 * Date: July 1, 2016 
 **/
