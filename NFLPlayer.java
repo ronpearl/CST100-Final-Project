@@ -9,7 +9,7 @@ public class NFLPlayer {
 	// Player Common Stats
 	private String playerName = "";
 	private String playerPosition = "";
-	private Int playerNum = "";
+	private int playerNum;
 	private String playerTeam = "";
 	private String playerStatus = "ACT";
 
@@ -37,7 +37,7 @@ public class NFLPlayer {
 	public String getPlayerPosition() {
 		return playerPosition;
 	}
-	public Int getPlayerNum() {
+	public int getPlayerNum() {
 		return playerNum;
 	}
 	public String getPlayerTeam() {
@@ -87,7 +87,7 @@ public class NFLPlayer {
 	public void setPlayerPosition(String plyrPosition) {
 		playerPosition = plyrPosition;
 	}
-	public void setPlayerNum(Int plyrNum) {
+	public void setPlayerNum(int plyrNum) {
 		playerNum = plyrNum;
 	}
 	public void setPlayerTeam(String plyrTeam) {
