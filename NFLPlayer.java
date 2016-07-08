@@ -11,7 +11,7 @@ public class NFLPlayer {
 	private String playerPosition = "";
 	private int playerNum;
 	private String playerTeam = "";
-	private String playerStatus = "ACT";
+//	private String playerStatus = "ACT";
 
 	// Player stats based on position
 	private int tackles = 0;
@@ -20,7 +20,7 @@ public class NFLPlayer {
 	private int fieldGoalsMade = 0;
 	private int carries = 0;
 	private double yardsPerCarry = 0;
-	private int totalYards = 0;
+	private int rushingYards = 0;
 	private int touchdowns = 0;
 	private int interceptions = 0;
 	private double yardsPerPass = 0;
@@ -43,9 +43,9 @@ public class NFLPlayer {
 	public String getPlayerTeam() {
 		return playerTeam;
 	}
-	public String getPlayerStatus() {
-		return playerStatus;
-	}
+//	public String getPlayerStatus() {
+//		return playerStatus;
+//	}
 	public int getTackles() {
 		return tackles;
 	}
@@ -65,7 +65,7 @@ public class NFLPlayer {
 		return yardsPerCarry;
 	}
 	public int getTotalYards() {
-		return totalYards;
+		return rushingYards;
 	}
 	public int getTouchdowns() {
 		return touchdowns;
@@ -93,9 +93,9 @@ public class NFLPlayer {
 	public void setPlayerTeam(String plyrTeam) {
 		playerTeam = plyrTeam;
 	}
-	public void setPlayerStatus(String plyrStatus) {
-		playerStatus = plyrStatus;
-	}
+//	public void setPlayerStatus(String plyrStatus) {
+//		playerStatus = plyrStatus;
+//	}
 	public void setTackles(int plyrTackles) {
 		tackles = plyrTackles;
 	}
@@ -115,7 +115,7 @@ public class NFLPlayer {
 		yardsPerCarry = plyrYPC;
 	}
 	public void setTotalYards(int plyrTotalYds) {
-		totalYards = plyrTotalYds;
+		rushingYards = plyrTotalYds;
 	}
 	public void setTouchdowns(int plyrTDs) {
 		touchdowns = plyrTDs;
