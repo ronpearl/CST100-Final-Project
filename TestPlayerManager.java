@@ -13,46 +13,52 @@ public class TestPlayerManager {
 						System.out.print("Position: ");
 						break;
 					case 2:
-						System.out.print("Number: ");
+						System.out.print("Position Category: ");
 						break;
 					case 3:
-						System.out.print("Team: ");
+						System.out.print("Number: ");
 						break;
 					case 4:
-						System.out.print("Tackles: ");
+						System.out.print("Team: ");
 						break;
 					case 5:
-						System.out.print("Sacks: ");
+						System.out.print("Tackles: ");
 						break;
 					case 6:
-						System.out.print("Receptions: ");
+						System.out.print("Sacks: ");
 						break;
 					case 7:
-						System.out.print("FG's Made: ");
+						System.out.print("Safeties: ");
 						break;
 					case 8:
-						System.out.print("Rushing Attempts: ");
+						System.out.print("Receptions: ");
 						break;
 					case 9:
-						System.out.print("Rushing Yards Per Attempt: ");
+						System.out.print("FG's Made: ");
 						break;
 					case 10:
-						System.out.print("Rushing Yards: ");
+						System.out.print("Rushing Attempts: ");
 						break;
 					case 11:
-						System.out.print("Touchdowns: ");
+						System.out.print("Rushing Yards Per Attempt: ");
 						break;
 					case 12:
-						System.out.print("Interceptions: ");
+						System.out.print("Rushing Yards: ");
 						break;
 					case 13:
-						System.out.print("Passing Yards Per Attempt: ");
+						System.out.print("Touchdowns: ");
 						break;
 					case 14:
+						System.out.print("Interceptions: ");
+						break;
+					case 15:
+						System.out.print("Passing Yards Per Attempt: ");
+						break;
+					case 16:
 						System.out.print("Receiving Yards Per Reception: ");
 						break;
 				}
-			
+				
 				System.out.println(playerStatsArray[i][j]);
 			}
 			

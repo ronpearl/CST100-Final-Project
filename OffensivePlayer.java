@@ -70,7 +70,7 @@ public class OffensivePlayer extends NFLPlayer {
 		yardsPerCarry = plyrYPC;
 	}
 	
-	public void setTotalYards(int plyrTotalYds) {
+	public void setRushingYards(int plyrTotalYds) {
 		rushingYards = plyrTotalYds;
 	}
 	
