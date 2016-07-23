@@ -17,8 +17,8 @@ import org.json.simple.parser.JSONParser;
 
 public class PlayerManager {
 	
-	public String[][] playerStats = new String[243][17];
-	public ArrayList playerObjects = new ArrayList();
+	public ArrayList<OffensivePlayer> offPlayerObjects = new ArrayList<OffensivePlayer>();
+	public ArrayList<DefensivePlayer> defPlayerObjects = new ArrayList<DefensivePlayer>();
 	
 	PlayerManager() {
 		createPlayers();
@@ -33,7 +33,6 @@ public class PlayerManager {
 		
 		try {
 			a = (JSONArray) parser.parse(new FileReader("fourNflTeams_PlayerData.json"));
-			int playerCounter = 0;
 			
 			for (Object o : a)
 			{
@@ -66,7 +65,7 @@ public class PlayerManager {
 					dPlayer.setInterceptions(Integer.parseInt(interceptions));
 					
 					// Add player to ArrayList
-					playerObjects.add(dPlayer);
+					defPlayerObjects.add(dPlayer);
 				} else {
 					OffensivePlayer oPlayer = new OffensivePlayer(name, position, Integer.parseInt(number), team);
 					oPlayer.setCarries(Integer.parseInt(carries));
@@ -79,19 +78,8 @@ public class PlayerManager {
 					oPlayer.setYardsPerReception(Double.parseDouble(yardsPerReception));
 					
 					// Add player to ArrayList
-					playerObjects.add(oPlayer);
+					offPlayerObjects.add(oPlayer);
 				}
-				
-				
-				String[] playerStatsArray = {name, position, positionCategory, number, team, tackles, sacks, safeties, receptions, fieldGoalsMade, 
-					carries, yardsPerCarry, rushingYards, touchdowns, interceptions, yardsPerPass, yardsPerReception
-				};
-								
-				for(int i = 0; i < playerStatsArray.length; i++) {
-					playerStats[playerCounter][i] = playerStatsArray[i];
-				}
-				
-				playerCounter++;
 			}
 		} catch (FileNotFoundException e) {
             e.printStackTrace();
@@ -102,10 +90,19 @@ public class PlayerManager {
         }
 	}
 	
+	
 	/*
-	 * Returns the array of players
+	 * Returns the arraylist of Offensive players
 	 */
-	public String[][] getPlayerArray() {
-		return playerStats;
+	public ArrayList<OffensivePlayer> getOffPlayerList() {
+		return offPlayerObjects;
+	}
+	
+	
+	/*
+	 * Returns the arraylist of Defensive players
+	 */
+	public ArrayList<DefensivePlayer> getDefPlayerList() {
+		return defPlayerObjects;
 	}
 }
