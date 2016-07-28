@@ -5,17 +5,15 @@
 * Date: July 1, 2016 
 **/
 
-public class NFLPlayer {
+public abstract class NFLPlayer {
 	// Player Common Stats
 	protected String playerName = "";
 	protected String playerPosition = "";
 	protected int playerNum;
 	protected String playerTeam = "";
 	
-	NFLPlayer(String playerName, String playerPosition, int playerNum, String playerTeam) {
-		this.playerName = playerName;
+	NFLPlayer(String playerPosition, String playerTeam) {
 		this.playerPosition = playerPosition;
-		this.playerNum = playerNum;
 		this.playerTeam = playerTeam;
 	}
 

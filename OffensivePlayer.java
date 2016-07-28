@@ -16,9 +16,14 @@ public class OffensivePlayer extends NFLPlayer {
 	protected int touchdowns = 0;
 	protected double yardsPerPass = 0;
 	protected double yardsPerReception = 0;
+	// overrides
+	protected String playerName = "";
+	protected int playerNum;
 	
 	OffensivePlayer(String playerName, String playerPosition, int playerNum, String playerTeam) {
-		super(playerName, playerPosition, playerNum, playerTeam);
+		super(playerPosition, playerTeam);
+		setPlayerName(playerName);
+		setPlayerNum(playerNum);
 	}
 	
 	public int getReceptions() {
@@ -53,6 +58,16 @@ public class OffensivePlayer extends NFLPlayer {
 		return yardsPerReception;
 	}
 	
+	@Override
+	public String getPlayerName() {
+		return playerName;
+	}
+	
+	@Override
+	public int getPlayerNum() {
+		return playerNum;
+	}
+	
 	// Setters
 	public void setReceptions(int plyrReceptions) {
 		receptions = plyrReceptions;
@@ -84,5 +99,15 @@ public class OffensivePlayer extends NFLPlayer {
 	
 	public void setYardsPerReception(double plyrYPR) {
 		yardsPerReception = plyrYPR;
+	}
+	
+	@Override
+	public void setPlayerName(String plyrName) {
+		playerName = plyrName;
+	}
+	
+	@Override
+	public void setPlayerNum(int plyrNum) {
+		playerNum = plyrNum;
 	}
 }
