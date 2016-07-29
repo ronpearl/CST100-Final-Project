@@ -16,6 +16,10 @@ public abstract class NFLPlayer implements Celebrator {
 		this.playerPosition = playerPosition;
 		this.playerTeam = playerTeam;
 	}
+	
+	public void celebrate() {
+		// from Celebrator interface
+	}
 
 	// Getters
 	public String getPlayerName() {

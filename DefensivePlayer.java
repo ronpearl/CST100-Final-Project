@@ -8,8 +8,6 @@ import java.util.Random;
 * 	Date: July 23, 2016 
 **/
 
-import java.util.Random;
-
 public class DefensivePlayer extends NFLPlayer implements Celebrator {
 	
 	protected int tackles = 0;
