@@ -1,3 +1,5 @@
+import java.util.Random;
+
 /** 
 * 	Program: Defensive Player Class
 * 	File: DefensivePlayer.java
@@ -6,7 +8,9 @@
 * 	Date: July 23, 2016 
 **/
 
-public class DefensivePlayer extends NFLPlayer {
+import java.util.Random;
+
+public class DefensivePlayer extends NFLPlayer implements Celebrator {
 	
 	protected int tackles = 0;
 	protected int sacks = 0;
@@ -20,6 +24,15 @@ public class DefensivePlayer extends NFLPlayer {
 		super(playerPosition, playerTeam);
 		setPlayerName(playerName);
 		setPlayerNum(playerNum);
+	}
+	
+	// Celebrate method from Celebrator interface
+	public void celebrate() {
+		// Get random celebrate option
+		int celebRandomInt = new Random().nextInt(Celebrator.waysToCelebrate.length);
+		String randCelebration = (Celebrator.waysToCelebrate[celebRandomInt]);
+		
+		System.out.println(this.playerName + " " + randCelebration + " to celebrate his draft!");
 	}
 	
 	// Getters

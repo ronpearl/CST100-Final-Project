@@ -5,7 +5,7 @@
 * Date: July 1, 2016 
 **/
 
-public abstract class NFLPlayer {
+public abstract class NFLPlayer implements Celebrator {
 	// Player Common Stats
 	protected String playerName = "";
 	protected String playerPosition = "";

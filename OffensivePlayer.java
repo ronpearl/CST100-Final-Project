@@ -6,7 +6,9 @@
 * 	Date: July 23, 2016 
 **/
 
-public class OffensivePlayer extends NFLPlayer {
+import java.util.Random;
+
+public class OffensivePlayer extends NFLPlayer implements Celebrator {
 	
 	protected int receptions = 0;
 	protected int fieldGoalsMade = 0;
@@ -24,6 +26,15 @@ public class OffensivePlayer extends NFLPlayer {
 		super(playerPosition, playerTeam);
 		setPlayerName(playerName);
 		setPlayerNum(playerNum);
+	}
+	
+	// Celebrate method from Celebrator interface
+	public void celebrate() {
+		// Get random celebrate option
+		int celebRandomInt = new Random().nextInt(Celebrator.waysToCelebrate.length);
+		String randCelebration = (Celebrator.waysToCelebrate[celebRandomInt]);
+		
+		System.out.println(this.playerName + " " + randCelebration + " to celebrate his draft!");
 	}
 	
 	public int getReceptions() {
