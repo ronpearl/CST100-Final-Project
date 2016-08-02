@@ -1,15 +1,145 @@
 import java.util.ArrayList;
 
-public class TestPlayerManager {
-	public static void main(String[] args) {
-		PlayerManager doPlayerManager = new PlayerManager();
-		ArrayList<OffensivePlayer> offPlayerObjects = doPlayerManager.getOffPlayerList();
-		ArrayList<DefensivePlayer> defPlayerObjects = doPlayerManager.getDefPlayerList();
+import javafx.application.Application;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
+import javafx.scene.Scene; 
+import javafx.scene.control.Button; 
+import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.GridPane;
+import javafx.scene.control.TextField;
+import javafx.scene.layout.HBox; 
+import javafx.scene.layout.VBox; 
+import javafx.stage.Stage;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView; 
+
+public class TestPlayerManager extends Application  {
+	
+	private Button btnRemove = new Button("Remove");
+	private Label removePlayerError = new Label();
+	ListView<String> theTeamList = new ListView<String>();
+	
+	@Override
+	public void start(Stage primaryStage) {
+		// Create a border pane 
+		BorderPane pane = new BorderPane();
 		
-		// Print out all Players
-		printOffensivePlayers(offPlayerObjects);
-		printDefensivePlayers(defPlayerObjects);
+		pane.setTop(getHBox());
+		pane.setLeft(getVBoxLeft());
+		pane.setCenter(getVBoxCenter());
+		pane.setRight(getVBoxRight());
+		
+		Scene scene = new Scene(pane);
+		primaryStage.setTitle("NFL Player Draft");
+		primaryStage.setScene(scene);
+		primaryStage.show();
+		
+		// TEMP
+		// ADD A PLAYER
+		MyTeam myteam = new MyTeam();
+		PlayerManager doPlayerManager = new PlayerManager();
+		myteam.addOffPlayer(doPlayerManager.offPlayerObjects.get(1));
+		ObservableList<String> tempItems = FXCollections.observableArrayList ("1 - No Players Yet");
+		theTeamList.setItems(tempItems);
+		
+		for(int i = 0; i < myteam.myTeamOffObjects.size(); i++) {
+			
+		}
+		
+//		PlayerManager doPlayerManager = new PlayerManager();
+//		ArrayList<OffensivePlayer> offPlayerObjects = doPlayerManager.getOffPlayerList();
+//		ArrayList<DefensivePlayer> defPlayerObjects = doPlayerManager.getDefPlayerList();
+//		
+//		// Print out all Players
+//		printOffensivePlayers(offPlayerObjects);
+//		printDefensivePlayers(defPlayerObjects);
 	}
+	
+	private HBox getHBox() {
+		HBox hBox = new HBox(15);
+		hBox.setPadding(new Insets(15,15,15,15));
+		hBox.setStyle("-fx-background-color: grey");
+//		hBox.getChildren().add(new Button("Computer Science"));
+//		hBox.getChildren().add(new Button("Chemistry"));
+		ImageView imageView = new ImageView(new Image("images/footballLogo.gif"));
+		hBox.getChildren().add(imageView);
+		
+		return hBox;
+	}
+	
+	private VBox getVBoxLeft() {
+		VBox vBox = new VBox(5);
+		vBox.setPrefWidth(180);
+		vBox.setPrefHeight(500);
+		vBox.setPadding(new Insets(15,5,5,5));
+		vBox.getChildren().add(new Label("Your Team:"));
+		
+		// Add empty team list
+//		ObservableList<String> tempItems = FXCollections.observableArrayList ("1 - No Players Yet");
+//		theTeam.setItems(tempItems);
+		vBox.getChildren().add(theTeamList);
+				
+		// Start player removal section
+		vBox.getChildren().add(new Label("Remove a Player:"));
+		
+		// Add grid for the removal button/textbox
+		GridPane grid = new GridPane();
+		grid.setHgap(10);
+		grid.add(btnRemove, 1, 0);
+		vBox.getChildren().add(grid);
+		
+		removePlayerError.setStyle("-fx-text-fill: #FF0000");
+		vBox.getChildren().add(removePlayerError);
+		
+		// Set handler for removePlayer button
+		btnRemove.setOnAction(e -> removePlayer());
+				
+		return vBox; 
+	}
+	
+	private void removePlayer() {
+		// Make sure a player is selcted to be removed
+		if (theTeam.getSelectionModel().getSelectedIndex() == -1) {
+			removePlayerError.setText("Please select a player");
+		} else {
+			int playerIndexToRemove = theTeam.getSelectionModel().getSelectedIndex();
+			
+			// TODO: Remove the player and re-do the list
+			removePlayerError.setText("Removing: " + playerIndexToRemove);
+			
+		}
+	}
+	
+	private VBox getVBoxRight() {
+		VBox vBox = new VBox(5);
+		vBox.setPrefWidth(200);
+		vBox.setPadding(new Insets(15,5,5,5));
+		vBox.getChildren().add(new Label("Courses"));
+		Label[] courses = {new Label("CSCI 1301"),new Label("CSCI 1302"),new Label("CSCI 2410"),new Label("CSCI 3720")};
+		
+		for (Label course: courses) {
+			VBox.setMargin(course, new Insets(0,0,0,15));
+			vBox.getChildren().add(course);
+		}
+		
+		return vBox; 
+	}
+	
+	private VBox getVBoxCenter() {
+		VBox vBox = new VBox(5);
+		vBox.setPrefWidth(300);
+		vBox.setPrefHeight(500);
+		vBox.setPadding(new Insets(15,5,5,5));
+		vBox.getChildren().add(new Label("Player Details:"));
+		
+		return vBox; 
+	}
+	
 	
 	/*
 	 * 	printOffensivePlayers(ArrayList<OffensivePlayer> offPlayers)
@@ -43,5 +173,9 @@ public class TestPlayerManager {
 					"\n"
 				);
 		}
+	}
+	
+	public static void main(String[] args) {
+		Application.launch(args);
 	}
 }
