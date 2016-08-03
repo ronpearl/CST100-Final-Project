@@ -20,9 +20,15 @@ import javafx.scene.image.ImageView;
 
 public class TestPlayerManager extends Application  {
 	
-	private Button btnRemove = new Button("Remove");
-	private Label removePlayerError = new Label();
-	ListView<String> theTeamList = new ListView<String>();
+	private MyTeam myteam = new MyTeam();
+	private Button btnOffRemove = new Button("Remove Off. Player");
+	private Button btnDefRemove = new Button("Remove Def. Player");
+	private Label removeOffPlayerError = new Label();
+	private Label removeDefPlayerError = new Label();
+	ListView<String> offenseTeamList = new ListView<String>();
+	ListView<String> defenseTeamList = new ListView<String>();
+	private ObservableList<String> offList;
+	private ObservableList<String> defList;
 	
 	@Override
 	public void start(Stage primaryStage) {
@@ -39,17 +45,19 @@ public class TestPlayerManager extends Application  {
 		primaryStage.setScene(scene);
 		primaryStage.show();
 		
-		// TEMP
-		// ADD A PLAYER
-		MyTeam myteam = new MyTeam();
+		// Build player library
 		PlayerManager doPlayerManager = new PlayerManager();
-		myteam.addOffPlayer(doPlayerManager.offPlayerObjects.get(1));
-		ObservableList<String> tempItems = FXCollections.observableArrayList ("1 - No Players Yet");
-		theTeamList.setItems(tempItems);
 		
-		for(int i = 0; i < myteam.myTeamOffObjects.size(); i++) {
-			
-		}
+		// TEMP.............
+		// ADD PLAYERS
+		myteam.addOffPlayer(doPlayerManager.offPlayerObjects.get(1));
+		myteam.addDefPlayer(doPlayerManager.defPlayerObjects.get(2));
+		offList = FXCollections.observableArrayList ("1 - No Players Yet");
+		defList = FXCollections.observableArrayList ("1 - No Players Yet");
+		offenseTeamList.setItems(offList);
+		defenseTeamList.setItems(defList);
+		
+		
 		
 //		PlayerManager doPlayerManager = new PlayerManager();
 //		ArrayList<OffensivePlayer> offPlayerObjects = doPlayerManager.getOffPlayerList();
@@ -79,38 +87,74 @@ public class TestPlayerManager extends Application  {
 		vBox.setPadding(new Insets(15,5,5,5));
 		vBox.getChildren().add(new Label("Your Team:"));
 		
-		// Add empty team list
+		// Add offense team list
 //		ObservableList<String> tempItems = FXCollections.observableArrayList ("1 - No Players Yet");
 //		theTeam.setItems(tempItems);
-		vBox.getChildren().add(theTeamList);
-				
-		// Start player removal section
-		vBox.getChildren().add(new Label("Remove a Player:"));
+		vBox.getChildren().add(offenseTeamList);
+		vBox.getChildren().add(btnOffRemove);
+		removeOffPlayerError.setStyle("-fx-text-fill: #FF0000");
+		vBox.getChildren().add(removeOffPlayerError);
+		
+		// Add defense team list
+		vBox.getChildren().add(defenseTeamList);
+		vBox.getChildren().add(btnDefRemove);
+		removeDefPlayerError.setStyle("-fx-text-fill: #FF0000");
+		vBox.getChildren().add(removeDefPlayerError);
 		
 		// Add grid for the removal button/textbox
-		GridPane grid = new GridPane();
-		grid.setHgap(10);
-		grid.add(btnRemove, 1, 0);
-		vBox.getChildren().add(grid);
+//		GridPane grid = new GridPane();
+//		grid.setHgap(10);
+//		grid.add(btnRemove, 1, 0);
+//		vBox.getChildren().add(grid);
 		
-		removePlayerError.setStyle("-fx-text-fill: #FF0000");
-		vBox.getChildren().add(removePlayerError);
+		
 		
 		// Set handler for removePlayer button
-		btnRemove.setOnAction(e -> removePlayer());
+		btnOffRemove.setOnAction(e -> removeOffPlayer());
+		btnDefRemove.setOnAction(e -> removeDefPlayer());
 				
 		return vBox; 
 	}
 	
-	private void removePlayer() {
-		// Make sure a player is selcted to be removed
-		if (theTeam.getSelectionModel().getSelectedIndex() == -1) {
-			removePlayerError.setText("Please select a player");
+	private void removeOffPlayer() {
+		// Make sure a player is selected to be removed
+		if (offenseTeamList.getSelectionModel().getSelectedIndex() == -1) {
+			removeOffPlayerError.setText("Please select a player");
 		} else {
-			int playerIndexToRemove = theTeam.getSelectionModel().getSelectedIndex();
+			int playerIndexToRemove = offenseTeamList.getSelectionModel().getSelectedIndex();
+			
+			// remove the player
+			myteam.removeOffPlayer(playerIndexToRemove);
+			
+			// Create new observable list for view
+			offList = myteam.createOffenseObservableList();
+			
+			// Show the new list
+			offenseTeamList.setItems(offList);
 			
 			// TODO: Remove the player and re-do the list
-			removePlayerError.setText("Removing: " + playerIndexToRemove);
+			removeOffPlayerError.setText("Player Removed");
+		}
+	}
+	
+	private void removeDefPlayer() {
+		// Make sure a player is selected to be removed
+		if (defenseTeamList.getSelectionModel().getSelectedIndex() == -1) {
+			removeDefPlayerError.setText("Please select a player");
+		} else {
+			int playerIndexToRemove = defenseTeamList.getSelectionModel().getSelectedIndex();
+			
+			// remove the player
+			myteam.removeDefPlayer(playerIndexToRemove);
+			
+			// Create new observable list for view
+			defList = myteam.createDefenseObservableList();
+			
+			// Show the new list
+			defenseTeamList.setItems(defList);
+			
+			// TODO: Remove the player and re-do the list
+			removeDefPlayerError.setText("Player Removed");
 			
 		}
 	}

@@ -57,10 +57,10 @@ public class PlayerManager {
 				String yardsPerReception = String.valueOf(player.get("ReceivingYardsPerReception"));
 				
 				// Create player objects based on position
-				if (positionCategory == "DEF") {
+				if (positionCategory.equals("DEF")) {
 					DefensivePlayer dPlayer = new DefensivePlayer(name, position, Integer.parseInt(number), team);
 					dPlayer.setTackles(Integer.parseInt(tackles));
-					dPlayer.setSacks(Integer.parseInt(sacks));
+					dPlayer.setSacks(Double.parseDouble(sacks));
 					dPlayer.setSafeties(Integer.parseInt(safeties));
 					dPlayer.setInterceptions(Integer.parseInt(interceptions));
 					

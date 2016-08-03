@@ -11,7 +11,7 @@ import java.util.Random;
 public class DefensivePlayer extends NFLPlayer implements Celebrator {
 	
 	protected int tackles = 0;
-	protected int sacks = 0;
+	protected double sacks = 0;
 	protected int safeties = 0;
 	protected int interceptions = 0;
 	// overrides
@@ -38,7 +38,7 @@ public class DefensivePlayer extends NFLPlayer implements Celebrator {
 		return tackles;
 	}
 	
-	public int getSacks() {
+	public double getSacks() {
 		return sacks;
 	}
 	
@@ -66,7 +66,7 @@ public class DefensivePlayer extends NFLPlayer implements Celebrator {
 		tackles = plyrTackles;
 	}
 	
-	public void setSacks(int plyrSacks) {
+	public void setSacks(double plyrSacks) {
 		sacks = plyrSacks;
 	}
 	
