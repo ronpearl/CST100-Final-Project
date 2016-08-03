@@ -30,6 +30,15 @@ public class TestPlayerManager extends Application  {
 	private ObservableList<String> offList;
 	private ObservableList<String> defList;
 	
+	ListView<String> availOffPlayerList = new ListView<String>();
+	private ObservableList<String> availOffList;
+	ListView<String> availDefPlayerList = new ListView<String>();
+	private ObservableList<String> availDefList;
+	private Label viewOffPlayerError = new Label();
+	private Label viewDefPlayerError = new Label();
+	private Button btnViewOffPlayer = new Button("View Off. Player");
+	private Button btnViewDefPlayer = new Button("View Def. Player");
+	
 	@Override
 	public void start(Stage primaryStage) {
 		// Create a border pane 
@@ -48,6 +57,13 @@ public class TestPlayerManager extends Application  {
 		// Build player library
 		PlayerManager doPlayerManager = new PlayerManager();
 		
+		// Fill the available players lists
+		availOffList = doPlayerManager.createAvailOffenseObservableList();
+		availDefList = doPlayerManager.createAvailDefenseObservableList();
+		availOffPlayerList.setItems(availOffList);
+		availDefPlayerList.setItems(availDefList);
+		
+		
 		// TEMP.............
 		// ADD PLAYERS
 		myteam.addOffPlayer(doPlayerManager.offPlayerObjects.get(1));
@@ -56,16 +72,6 @@ public class TestPlayerManager extends Application  {
 		defList = FXCollections.observableArrayList ("1 - No Players Yet");
 		offenseTeamList.setItems(offList);
 		defenseTeamList.setItems(defList);
-		
-		
-		
-//		PlayerManager doPlayerManager = new PlayerManager();
-//		ArrayList<OffensivePlayer> offPlayerObjects = doPlayerManager.getOffPlayerList();
-//		ArrayList<DefensivePlayer> defPlayerObjects = doPlayerManager.getDefPlayerList();
-//		
-//		// Print out all Players
-//		printOffensivePlayers(offPlayerObjects);
-//		printDefensivePlayers(defPlayerObjects);
 	}
 	
 	private HBox getHBox() {
@@ -82,20 +88,21 @@ public class TestPlayerManager extends Application  {
 	
 	private VBox getVBoxLeft() {
 		VBox vBox = new VBox(5);
-		vBox.setPrefWidth(180);
+		vBox.setPrefWidth(230);
 		vBox.setPrefHeight(500);
 		vBox.setPadding(new Insets(15,5,5,5));
-		vBox.getChildren().add(new Label("Your Team:"));
 		
 		// Add offense team list
-//		ObservableList<String> tempItems = FXCollections.observableArrayList ("1 - No Players Yet");
-//		theTeam.setItems(tempItems);
+		vBox.getChildren().add(new Label("Your Offense:"));
+		offenseTeamList.setMaxHeight(200);
 		vBox.getChildren().add(offenseTeamList);
 		vBox.getChildren().add(btnOffRemove);
 		removeOffPlayerError.setStyle("-fx-text-fill: #FF0000");
 		vBox.getChildren().add(removeOffPlayerError);
 		
 		// Add defense team list
+		vBox.getChildren().add(new Label("Your Offense:"));
+		defenseTeamList.setMaxHeight(200);
 		vBox.getChildren().add(defenseTeamList);
 		vBox.getChildren().add(btnDefRemove);
 		removeDefPlayerError.setStyle("-fx-text-fill: #FF0000");
@@ -161,22 +168,32 @@ public class TestPlayerManager extends Application  {
 	
 	private VBox getVBoxRight() {
 		VBox vBox = new VBox(5);
-		vBox.setPrefWidth(200);
+		vBox.setPrefWidth(230);
 		vBox.setPadding(new Insets(15,5,5,5));
-		vBox.getChildren().add(new Label("Courses"));
-		Label[] courses = {new Label("CSCI 1301"),new Label("CSCI 1302"),new Label("CSCI 2410"),new Label("CSCI 3720")};
+		vBox.getChildren().add(new Label("Available Offense Players::"));
+		availOffPlayerList.setMaxHeight(200);
+		vBox.getChildren().add(availOffPlayerList);
+		vBox.getChildren().add(btnViewOffPlayer);
+		viewOffPlayerError.setStyle("-fx-text-fill: #FF0000");
+		vBox.getChildren().add(viewOffPlayerError);
 		
-		for (Label course: courses) {
-			VBox.setMargin(course, new Insets(0,0,0,15));
-			vBox.getChildren().add(course);
-		}
+		vBox.getChildren().add(new Label("Available Defense Players::"));
+		availDefPlayerList.setMaxHeight(200);
+		vBox.getChildren().add(availDefPlayerList);
+		vBox.getChildren().add(btnViewDefPlayer);
+		viewDefPlayerError.setStyle("-fx-text-fill: #FF0000");
+		vBox.getChildren().add(viewDefPlayerError);
+		
+		// Set handlers on buttons
+		btnViewOffPlayer.setOnAction(e -> showOffPlayer());
+		btnViewDefPlayer.setOnAction(e -> showDefPlayer());
 		
 		return vBox; 
 	}
 	
 	private VBox getVBoxCenter() {
 		VBox vBox = new VBox(5);
-		vBox.setPrefWidth(300);
+		vBox.setPrefWidth(460);
 		vBox.setPrefHeight(500);
 		vBox.setPadding(new Insets(15,5,5,5));
 		vBox.getChildren().add(new Label("Player Details:"));
@@ -184,38 +201,25 @@ public class TestPlayerManager extends Application  {
 		return vBox; 
 	}
 	
-	
 	/*
-	 * 	printOffensivePlayers(ArrayList<OffensivePlayer> offPlayers)
-	 * 
-	 * Print out list for the Offensive players info
+	 * Show the details for the selected offensive player
 	 */
-	public static void printOffensivePlayers(ArrayList<OffensivePlayer> offPlayers) {
-		for (int i = 0; i < offPlayers.size(); i++) {
-			System.out.print(
-				"Name: " + offPlayers.get(i).getPlayerName() + "\t" +
-				"Position: " + offPlayers.get(i).getPlayerPosition() + "\t" +
-				"Number: " + offPlayers.get(i).getPlayerNum() + "\t" +
-				"Team: " + offPlayers.get(i).getPlayerTeam() +
-				"\n"
-			);
+	private void showOffPlayer() {
+		if (availOffPlayerList.getSelectionModel().getSelectedIndex() == -1) {
+			viewOffPlayerError.setText("Please select a player");
+		} else {
+			viewOffPlayerError.setText(" ");
 		}
 	}
 	
 	/*
-	 * 	printDefensivePlayers(ArrayList<DefensivePlayer> defPlayers)
-	 * 
-	 * Print out list for the Defensive players info
+	 * Show the details for the selected defensive player
 	 */
-	public static void printDefensivePlayers(ArrayList<DefensivePlayer> defPlayers) {
-		for (int i = 0; i < defPlayers.size(); i++) {
-			System.out.print(
-					"Name: " + defPlayers.get(i).getPlayerName() + "\t" +
-					"Position: " + defPlayers.get(i).getPlayerPosition() + "\t" +
-					"Number: " + defPlayers.get(i).getPlayerNum() + "\t" +
-					"Team: " + defPlayers.get(i).getPlayerTeam() +
-					"\n"
-				);
+	private void showDefPlayer() {
+		if (availDefPlayerList.getSelectionModel().getSelectedIndex() == -1) {
+			viewDefPlayerError.setText("Please select a player");
+		} else {
+			viewDefPlayerError.setText(" ");
 		}
 	}
 	

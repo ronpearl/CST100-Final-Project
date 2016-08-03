@@ -13,6 +13,10 @@ import java.util.ArrayList;
 import org.json.simple.JSONObject;
 import org.json.simple.JSONArray;
 import org.json.simple.parser.ParseException;
+
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+
 import org.json.simple.parser.JSONParser;
 
 public class PlayerManager {
@@ -88,6 +92,38 @@ public class PlayerManager {
         } catch (ParseException e) {
             e.printStackTrace();
         }
+	}
+	
+	
+	/*
+	 * Create offensive observable list
+	 */
+	public ObservableList<String> createAvailOffenseObservableList() {
+		String[] tempListOfPlayers = new String[offPlayerObjects.size()];
+		
+		for (int i = 0; i < offPlayerObjects.size(); i++) {
+			tempListOfPlayers[i] = i + " - " + offPlayerObjects.get(i).playerName + " - " + offPlayerObjects.get(i).playerPosition;
+		}
+		
+		ObservableList<String> theOffObsList = FXCollections.observableArrayList (tempListOfPlayers);
+		
+		return theOffObsList;
+	}
+	
+	
+	/*
+	 * Create defensive observable list
+	 */
+	public ObservableList<String> createAvailDefenseObservableList() {
+		String[] tempListOfPlayers = new String[defPlayerObjects.size()];
+		
+		for (int i = 0; i < defPlayerObjects.size(); i++) {
+			tempListOfPlayers[i] = i + " - " + defPlayerObjects.get(i).playerName + " - " + defPlayerObjects.get(i).playerPosition;
+		}
+		
+		ObservableList<String> theDefObsList = FXCollections.observableArrayList (tempListOfPlayers);
+		
+		return theDefObsList;
 	}
 	
 	
