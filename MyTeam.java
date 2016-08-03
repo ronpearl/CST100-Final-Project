@@ -23,13 +23,13 @@ public class MyTeam {
 	 * Create offense observable list
 	 */
 	public ObservableList<String> createOffenseObservableList() {
-		String tempListString = "";
+		String[] tempListOfPlayers = new String[myTeamOffObjects.size()];
 		
 		for (int i = 0; i < myTeamOffObjects.size(); i++) {
-			tempListString += i + " - " + myTeamOffObjects.get(i).playerName + ",";
+			tempListOfPlayers[i] = i + " - " + myTeamOffObjects.get(i).playerName + ",";
 		}
 		
-		ObservableList<String> theOffObsList = FXCollections.observableArrayList (tempListString);
+		ObservableList<String> theOffObsList = FXCollections.observableArrayList (tempListOfPlayers);
 		
 		return theOffObsList;
 	}
@@ -38,13 +38,13 @@ public class MyTeam {
 	 * Create defense observable list
 	 */
 	public ObservableList<String> createDefenseObservableList() {
-		String tempListString = "";
+		String[] tempListOfPlayers = new String[myTeamDefObjects.size()];
 		
 		for (int i = 0; i < myTeamDefObjects.size(); i++) {
-			tempListString += i + " - " + myTeamDefObjects.get(i).playerName + ",";
+			tempListOfPlayers[i] = i + " - " + myTeamDefObjects.get(i).playerName + " - " + myTeamDefObjects.get(i).playerPosition;
 		}
 		
-		ObservableList<String> theDefObsList = FXCollections.observableArrayList (tempListString);
+		ObservableList<String> theDefObsList = FXCollections.observableArrayList (tempListOfPlayers);
 		
 		return theDefObsList;
 	}
