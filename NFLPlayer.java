@@ -17,8 +17,8 @@ public abstract class NFLPlayer implements Celebrator {
 		this.playerTeam = playerTeam;
 	}
 	
-	public void celebrate() {
-		// from Celebrator interface
+	public String celebrate() {
+		return "";
 	}
 
 	// Getters

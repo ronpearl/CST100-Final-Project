@@ -29,12 +29,12 @@ public class OffensivePlayer extends NFLPlayer implements Celebrator {
 	}
 	
 	// Celebrate method from Celebrator interface
-	public void celebrate() {
+	public String celebrate() {
 		// Get random celebrate option
 		int celebRandomInt = new Random().nextInt(Celebrator.waysToCelebrate.length);
 		String randCelebration = (Celebrator.waysToCelebrate[celebRandomInt]);
 		
-		System.out.println(this.playerName + " " + randCelebration + " to celebrate his draft!");
+		return this.playerName + " " + randCelebration + " to celebrate his draft!";
 	}
 	
 	public int getReceptions() {

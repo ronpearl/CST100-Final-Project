@@ -70,6 +70,7 @@ public class TestPlayerManager extends Application  {
 	private Label touchdowns = new Label();
 	private Label yardsPerPass = new Label();
 	private Label yardsPerReception = new Label();
+	private Label celebration = new Label();
 	private Button addOffPlayerBtn = new Button("Add To My Team");
 	private Button addDefPlayerBtn = new Button("Add To My Team");
 	
@@ -123,6 +124,7 @@ public class TestPlayerManager extends Application  {
 		touchdowns.setText("");
 		yardsPerPass.setText("");
 		yardsPerReception.setText("");
+		celebration.setText("");
 	}
 	
 	private HBox getHBox() {
@@ -257,6 +259,10 @@ public class TestPlayerManager extends Application  {
 		grid.add(addDefPlayerBtn, 0, 7);
 		addDefPlayerBtn.setVisible(false);
 		
+		celebration.setStyle("-fx-text-fill: #B22222");
+		celebration.setFont(Font.font ("Sans Serif", FontWeight.BOLD, 16));
+		grid.add(celebration, 0, 8);
+		
 		vBox.getChildren().add(grid);
 		
 		// Set handlers on buttons
@@ -325,7 +331,6 @@ public class TestPlayerManager extends Application  {
 			fillPlayerLists();
 			
 			removeDefPlayerError.setText("Player Removed");
-			
 		}
 	}
 
@@ -406,6 +411,9 @@ public class TestPlayerManager extends Application  {
 		
 		// hide the button
 		addOffPlayerBtn.setVisible(false);
+		
+		// Show celebration
+		celebration.setText( myTeam.getOffPlayerObject(parts[1]).celebrate() );
 	}
 	
 	
@@ -427,6 +435,9 @@ public class TestPlayerManager extends Application  {
 		
 		// hide the button
 		addDefPlayerBtn.setVisible(false);
+		
+		// Show celebration
+		celebration.setText( myTeam.getDefPlayerObject(parts[1]).celebrate() );
 	}
 	
 	public static void main(String[] args) {
