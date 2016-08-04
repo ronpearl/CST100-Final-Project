@@ -26,7 +26,7 @@ public class MyTeam extends PlayerManager {
 		String[] tempListOfPlayers = new String[myTeamOffObjects.size()];
 		
 		for (int i = 0; i < myTeamOffObjects.size(); i++) {
-			tempListOfPlayers[i] = i + " - " + myTeamOffObjects.get(i).playerName + " - " + myTeamOffObjects.get(i).playerPosition;
+			tempListOfPlayers[i] = myTeamOffObjects.get(i).playerNum + " - " + myTeamOffObjects.get(i).playerName + " - " + myTeamOffObjects.get(i).playerPosition;
 		}
 		
 		ObservableList<String> theOffObsList = FXCollections.observableArrayList (tempListOfPlayers);
@@ -41,7 +41,7 @@ public class MyTeam extends PlayerManager {
 		String[] tempListOfPlayers = new String[myTeamDefObjects.size()];
 		
 		for (int i = 0; i < myTeamDefObjects.size(); i++) {
-			tempListOfPlayers[i] = i + " - " + myTeamDefObjects.get(i).playerName + " - " + myTeamDefObjects.get(i).playerPosition;
+			tempListOfPlayers[i] = myTeamDefObjects.get(i).playerNum + " - " + myTeamDefObjects.get(i).playerName + " - " + myTeamDefObjects.get(i).playerPosition;
 		}
 		
 		ObservableList<String> theDefObsList = FXCollections.observableArrayList (tempListOfPlayers);

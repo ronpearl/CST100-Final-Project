@@ -9,6 +9,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import org.json.simple.JSONObject;
 import org.json.simple.JSONArray;
@@ -102,7 +103,7 @@ public class PlayerManager {
 		String[] tempListOfPlayers = new String[offPlayerObjects.size()];
 		
 		for (int i = 0; i < offPlayerObjects.size(); i++) {
-			tempListOfPlayers[i] = i + " - " + offPlayerObjects.get(i).playerName + " - " + offPlayerObjects.get(i).playerPosition;
+			tempListOfPlayers[i] = offPlayerObjects.get(i).playerNum + " - " + offPlayerObjects.get(i).playerName + " - " + offPlayerObjects.get(i).playerPosition;
 		}
 		
 		ObservableList<String> theOffObsList = FXCollections.observableArrayList (tempListOfPlayers);
@@ -118,7 +119,7 @@ public class PlayerManager {
 		String[] tempListOfPlayers = new String[defPlayerObjects.size()];
 		
 		for (int i = 0; i < defPlayerObjects.size(); i++) {
-			tempListOfPlayers[i] = i + " - " + defPlayerObjects.get(i).playerName + " - " + defPlayerObjects.get(i).playerPosition;
+			tempListOfPlayers[i] = defPlayerObjects.get(i).playerNum + " - " + defPlayerObjects.get(i).playerName + " - " + defPlayerObjects.get(i).playerPosition;
 		}
 		
 		ObservableList<String> theDefObsList = FXCollections.observableArrayList (tempListOfPlayers);
@@ -126,6 +127,102 @@ public class PlayerManager {
 		return theDefObsList;
 	}
 	
+	
+	/*
+	 * Create offense observable list from search parameters
+	 */
+	public ObservableList<String> createSearchOffenseObservableList(String searchName, String searchTeam, String searchPosition) {
+		String[] tempListOfPlayers = new String[0];
+		boolean okToAdd = false;
+		
+		for (int i = 0; i < offPlayerObjects.size(); i++) {			
+			if (searchName != "") {
+				if ((int) offPlayerObjects.get(i).playerName.toLowerCase().indexOf(searchName.toLowerCase()) >= 0) {
+					okToAdd = true;
+				}
+			}
+
+			if (searchTeam != "Team") {
+				if (offPlayerObjects.get(i).playerTeam.equals(searchTeam)) {
+					if (okToAdd)
+						okToAdd = true;
+				} else {
+					okToAdd = false;
+				}
+			}
+
+			if (searchPosition != "Position") {
+				if (offPlayerObjects.get(i).playerPosition.equals(searchPosition)) {
+					if (okToAdd)
+						okToAdd = true;
+				} else {
+					okToAdd = false;
+				}
+			}
+
+			if (okToAdd) {
+				tempListOfPlayers = Arrays.copyOf(tempListOfPlayers, tempListOfPlayers.length + 1);
+				tempListOfPlayers[tempListOfPlayers.length - 1] = offPlayerObjects.get(i).playerNum + " - " + 
+						offPlayerObjects.get(i).playerName + " - " + 
+						offPlayerObjects.get(i).playerPosition;
+			}
+			
+			// Reset bool
+			okToAdd = false;
+		}
+		
+		ObservableList<String> theSearchObsList = FXCollections.observableArrayList(tempListOfPlayers);
+		
+		return theSearchObsList;
+	}
+	
+	/*
+	 * Create defense observable list from search parameters
+	 */
+	public ObservableList<String> createSearchDefenseObservableList(String searchName, String searchTeam, String searchPosition) {
+		String[] tempListOfPlayers = new String[0];
+		boolean okToAdd = false;
+		
+		for (int i = 0; i < defPlayerObjects.size(); i++) {			
+			if (searchName != "") {
+				if ((int) defPlayerObjects.get(i).playerName.toLowerCase().indexOf(searchName.toLowerCase()) >= 0) {
+					okToAdd = true;
+				}
+			}
+
+			if (searchTeam != "Team") {
+				if (defPlayerObjects.get(i).playerTeam.equals(searchTeam)) {
+					if (okToAdd)
+						okToAdd = true;
+				} else {
+					okToAdd = false;
+				}
+			}
+
+			if (searchPosition != "Position") {
+				if (defPlayerObjects.get(i).playerPosition.equals(searchPosition)) {
+					if (okToAdd)
+						okToAdd = true;
+				} else {
+					okToAdd = false;
+				}
+			}
+
+			if (okToAdd) {
+				tempListOfPlayers = Arrays.copyOf(tempListOfPlayers, tempListOfPlayers.length + 1);
+				tempListOfPlayers[tempListOfPlayers.length - 1] = defPlayerObjects.get(i).playerNum + " - " + 
+						defPlayerObjects.get(i).playerName + " - " + 
+						defPlayerObjects.get(i).playerPosition;
+			}
+			
+			// Reset bool
+			okToAdd = false;
+		}
+		
+		ObservableList<String> theSearchObsList = FXCollections.observableArrayList(tempListOfPlayers);
+		
+		return theSearchObsList;
+	}
 	
 	/*
 	 * Removes an offensive player from the list
