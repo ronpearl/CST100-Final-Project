@@ -32,6 +32,7 @@ public class TestPlayerManager extends Application  {
 	// Horizontal box
 	private TextField playerSearchBox = new TextField();
 	private Button searchPlayerButton = new Button("Search");
+	private Label applicationError = new Label();
 	private ComboBox<String> selectTeamBox = new ComboBox<String>();
 	private ComboBox<String> selectPositionBox = new ComboBox<String>();
 	
@@ -156,6 +157,7 @@ public class TestPlayerManager extends Application  {
 		hGrid.add(selectPositionBox, 4, 0);
 		
 		hGrid.add(searchPlayerButton, 5, 0);
+		hGrid.add(applicationError, 2, 1);
 		
 		hBox.getChildren().add(hGrid);
 		
@@ -394,50 +396,58 @@ public class TestPlayerManager extends Application  {
 	}
 	
 	private void addOffPlayerToMyTeam() {
-		// Reset Labels
-		resetLabels();
-		
-		// Get the selected players name
-		String[] parts = availOffPlayerList.getSelectionModel().getSelectedItem().split(" - ");
-
-		// Add player to my team
-		myTeam.addOffPlayer(doPlayerManager.getOffPlayerObject(parts[1]));
-		
-		// remove the player from the available list
-		doPlayerManager.removeOffPlayer(parts[1]);
-		
-		// Fill Player Lists
-		fillPlayerLists();
-		
-		// hide the button
-		addOffPlayerBtn.setVisible(false);
-		
-		// Show celebration
-		celebration.setText( myTeam.getOffPlayerObject(parts[1]).celebrate() );
+		try {
+			// Reset Labels
+			resetLabels();
+			
+			// Get the selected players name
+			String[] parts = availOffPlayerList.getSelectionModel().getSelectedItem().split(" - ");
+	
+			// Add player to my team
+			myTeam.addOffPlayer(doPlayerManager.getOffPlayerObject(parts[1]));
+			
+			// remove the player from the available list
+			doPlayerManager.removeOffPlayer(parts[1]);
+			
+			// Fill Player Lists
+			fillPlayerLists();
+			
+			// hide the button
+			addOffPlayerBtn.setVisible(false);
+			
+			// Show celebration
+			celebration.setText( myTeam.getOffPlayerObject(parts[1]).celebrate() );
+		} catch (Exception e) {
+			applicationError.setText("There was a problem adding Offensive Player to your team");
+		}
 	}
 	
 	
 	private void addDefPlayerToMyTeam() {
-		// Reset Labels
-		resetLabels();
-					
-		// Get the selected players name
-		String[] parts = availDefPlayerList.getSelectionModel().getSelectedItem().split(" - ");
-
-		// Add player to my team
-		myTeam.addDefPlayer(doPlayerManager.getDefPlayerObject(parts[1]));
-		
-		// remove the player from the available list
-		doPlayerManager.removeDefPlayer(parts[1]);
-		
-		// Fill Player Lists
-		fillPlayerLists();
-		
-		// hide the button
-		addDefPlayerBtn.setVisible(false);
-		
-		// Show celebration
-		celebration.setText( myTeam.getDefPlayerObject(parts[1]).celebrate() );
+		try {
+			// Reset Labels
+			resetLabels();
+						
+			// Get the selected players name
+			String[] parts = availDefPlayerList.getSelectionModel().getSelectedItem().split(" - ");
+	
+			// Add player to my team
+			myTeam.addDefPlayer(doPlayerManager.getDefPlayerObject(parts[1]));
+			
+			// remove the player from the available list
+			doPlayerManager.removeDefPlayer(parts[1]);
+			
+			// Fill Player Lists
+			fillPlayerLists();
+			
+			// hide the button
+			addDefPlayerBtn.setVisible(false);
+			
+			// Show celebration
+			celebration.setText( myTeam.getDefPlayerObject(parts[1]).celebrate() );
+		} catch (Exception e) {
+			applicationError.setText("There was a problem adding Defensive Player to your team");
+		}
 	}
 	
 	public static void main(String[] args) {
