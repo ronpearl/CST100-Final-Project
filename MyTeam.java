@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
-public class MyTeam {
+public class MyTeam extends PlayerManager {
 	
 	public ArrayList<OffensivePlayer> myTeamOffObjects = new ArrayList<OffensivePlayer>();
 	public ArrayList<DefensivePlayer> myTeamDefObjects = new ArrayList<DefensivePlayer>();
@@ -26,7 +26,7 @@ public class MyTeam {
 		String[] tempListOfPlayers = new String[myTeamOffObjects.size()];
 		
 		for (int i = 0; i < myTeamOffObjects.size(); i++) {
-			tempListOfPlayers[i] = i + " - " + myTeamOffObjects.get(i).playerName + ",";
+			tempListOfPlayers[i] = i + " - " + myTeamOffObjects.get(i).playerName + " - " + myTeamOffObjects.get(i).playerPosition;
 		}
 		
 		ObservableList<String> theOffObsList = FXCollections.observableArrayList (tempListOfPlayers);
@@ -59,8 +59,8 @@ public class MyTeam {
 	/*
 	 * Add offensive player
 	 */
-	public void addOffPlayer(OffensivePlayer player) {
-		myTeamOffObjects.add(player);
+	public void addOffPlayer(OffensivePlayer playerObject) {
+		myTeamOffObjects.add(playerObject);
 	}
 	
 	/*
@@ -73,8 +73,36 @@ public class MyTeam {
 	/*
 	 * Add defensive player
 	 */
-	public void addDefPlayer(DefensivePlayer player) {
-		myTeamDefObjects.add(player);
+	public void addDefPlayer(DefensivePlayer playerObject) {
+		myTeamDefObjects.add(playerObject);
+	}
+	
+	/*
+	 * Returns a single Offensive player object
+	 */
+	public OffensivePlayer getOffPlayerObject(String playerName) {
+		OffensivePlayer playerObject = null;
+		
+		for(OffensivePlayer player : myTeamOffObjects) {
+			if (player.playerName.equals(playerName))
+				playerObject = player;
+		}
+		
+		return playerObject;
+	}
+	
+	/*
+	 * Returns a single Defensive player object
+	 */
+	public DefensivePlayer getDefPlayerObject(String playerName) {
+		DefensivePlayer playerObject = null;
+		
+		for(DefensivePlayer player : myTeamDefObjects) {
+			if (player.playerName.equals(playerName))
+				playerObject = player;
+		}
+		
+		return playerObject;
 	}
 	
 	/*

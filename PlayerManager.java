@@ -128,17 +128,73 @@ public class PlayerManager {
 	
 	
 	/*
-	 * Returns the arraylist of Offensive players
+	 * Removes an offensive player from the list
 	 */
-	public ArrayList<OffensivePlayer> getOffPlayerList() {
-		return offPlayerObjects;
+	public void removeOffPlayer(String playerToRemove) {
+		OffensivePlayer playerObject = null;
+		
+		for(OffensivePlayer player : offPlayerObjects) {
+			if (player.playerName.equals(playerToRemove))
+				playerObject = player;
+		}
+		
+		offPlayerObjects.remove(playerObject);
+	}
+	
+	/*
+	 * Removes an defensive player from the list
+	 */
+	public void removeDefPlayer(String playerToRemove) {
+		DefensivePlayer playerObject = null;
+		
+		for(DefensivePlayer player : defPlayerObjects) {
+			if (player.playerName.equals(playerToRemove))
+				playerObject = player;
+		}
+		
+		defPlayerObjects.remove(playerObject);
+	}
+	
+	/*
+	 * Adds an offensive player to the list
+	 */
+	public void addOffPlayer(OffensivePlayer playerObject) {
+		offPlayerObjects.add(playerObject);
+	}
+	
+	/*
+	 * Adds a defensive player to the list
+	 */
+	public void addDefPlayer(DefensivePlayer playerObject) {
+		defPlayerObjects.add(playerObject);
+	}
+	
+	/*
+	 * Returns a single Offensive players object
+	 */
+	public OffensivePlayer getOffPlayerObject(String playerName) {
+		OffensivePlayer playerObject = null;
+		
+		for(OffensivePlayer player : offPlayerObjects) {
+			if (player.playerName.equals(playerName))
+				playerObject = player;
+		}
+
+		return playerObject;
 	}
 	
 	
 	/*
-	 * Returns the arraylist of Defensive players
+	 * Returns a single Defensive player object
 	 */
-	public ArrayList<DefensivePlayer> getDefPlayerList() {
-		return defPlayerObjects;
+	public DefensivePlayer getDefPlayerObject(String playerName) {
+		DefensivePlayer playerObject = null;
+		
+		for(DefensivePlayer player : defPlayerObjects) {
+			if (player.playerName.equals(playerName))
+				playerObject = player;
+		}
+		
+		return playerObject;
 	}
 }
