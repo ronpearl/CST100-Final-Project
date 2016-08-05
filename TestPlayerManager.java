@@ -29,14 +29,14 @@ public class TestPlayerManager extends Application  {
 	// Setup my team
 	private MyTeam myTeam = new MyTeam();
 	
-	// Horizontal box
+	// Horizontal box contents
 	private TextField playerSearchBox = new TextField();
 	private Button searchPlayerButton = new Button("Search");
 	private Label applicationError = new Label();
 	private ComboBox<String> selectTeamBox = new ComboBox<String>();
 	private ComboBox<String> selectPositionBox = new ComboBox<String>();
 	
-	// Left box
+	// Left box contents
 	private Button btnOffRemove = new Button("Remove Off. Player");
 	private Button btnDefRemove = new Button("Remove Def. Player");
 	private Label removeOffPlayerError = new Label();
@@ -46,7 +46,7 @@ public class TestPlayerManager extends Application  {
 	private ObservableList<String> offList;
 	private ObservableList<String> defList;
 	
-	// Right box
+	// Right box contents
 	ListView<String> availOffPlayerList = new ListView<String>();
 	private ObservableList<String> availOffList;
 	ListView<String> availDefPlayerList = new ListView<String>();
@@ -56,7 +56,7 @@ public class TestPlayerManager extends Application  {
 	private Button btnViewOffPlayer = new Button("View Off. Player");
 	private Button btnViewDefPlayer = new Button("View Def. Player");
 	
-	// Center box
+	// Center box contents
 	private Label playerMainInfo = new Label();
 	private Label playerPosAndTeam = new Label();
 	private Label playerTackles = new Label();
@@ -94,6 +94,12 @@ public class TestPlayerManager extends Application  {
 		fillPlayerLists();
 	}
 	
+	/**
+	 * fillPlayerLists
+	 * 
+	 * Fills the data for available players and myTeam based upon current
+	 * contents of each respective object.
+	 */
 	private void fillPlayerLists() {
 		// Fill available player lists
 		availOffList = doPlayerManager.createAvailOffenseObservableList();
@@ -108,6 +114,11 @@ public class TestPlayerManager extends Application  {
 		defenseTeamList.setItems(defList);
 	}
 	
+	/**
+	 * resetLabels
+	 * 
+	 * Resets labels within the applet preparing them for new data
+	 */
 	private void resetLabels() {
 		playerMainInfo.setText("Select a Player");
 		removeOffPlayerError.setText("");
@@ -128,6 +139,13 @@ public class TestPlayerManager extends Application  {
 		celebration.setText("");
 	}
 	
+	/**
+	 * getHBox
+	 * 
+	 * Creates the horizontal box on top and builds the contents. Returns the hBox
+	 * 
+	 * @return
+	 */
 	private HBox getHBox() {
 		HBox hBox = new HBox(15);
 		hBox.setPadding(new Insets(15,15,15,15));
@@ -168,6 +186,13 @@ public class TestPlayerManager extends Application  {
 		return hBox;
 	}
 	
+	/**
+	 * getVBoxLeft
+	 * 
+	 * Creates the vertical box on the left and builds the contents. Returns the vBox
+	 * 
+	 * @return
+	 */
 	private VBox getVBoxLeft() {
 		VBox vBox = new VBox(5);
 		vBox.setPrefWidth(230);
@@ -200,6 +225,13 @@ public class TestPlayerManager extends Application  {
 		return vBox; 
 	}
 	
+	/**
+	 * getVBoxRight
+	 * 
+	 * Creates the vertical box on the right and builds the contents. Returns the vBox
+	 * 
+	 * @return
+	 */
 	private VBox getVBoxRight() {
 		VBox vBox = new VBox(5);
 		vBox.setPrefWidth(230);
@@ -227,6 +259,13 @@ public class TestPlayerManager extends Application  {
 		return vBox; 
 	}
 	
+	/**
+	 * getVBoxCenter
+	 * 
+	 * Creates the vertical box in the middle and builds the contents. Returns the vBox
+	 * 
+	 * @return
+	 */
 	private VBox getVBoxCenter() {
 		VBox vBox = new VBox(5);
 		vBox.setPrefWidth(460);
@@ -281,6 +320,14 @@ public class TestPlayerManager extends Application  {
 		return vBox; 
 	}
 	
+	/**
+	 * searchPlayers
+	 * 
+	 * Handles the event of the search button. Takes the data from each box and 
+	 * sends the data to be analyzed in order to parse the available players.
+	 * 
+	 * @author ron.pearl
+	 */
 	class searchPlayers implements EventHandler<ActionEvent> {
 		@Override
 		public void handle(ActionEvent e) {
@@ -296,6 +343,13 @@ public class TestPlayerManager extends Application  {
 		}
 	}
 	
+	/**
+	 * removeOffPlayer
+	 * 
+	 * Removes an offensive player on myTeam
+	 * 
+	 * @author ron.pearl
+	 */
 	class removeOffPlayer implements EventHandler<ActionEvent> {
 		@Override
 		public void handle(ActionEvent e) {
@@ -324,6 +378,13 @@ public class TestPlayerManager extends Application  {
 		}
 	}
 	
+	/**
+	 * removeDefPlayer
+	 * 
+	 * Removes a defensive player on myTeam
+	 * 
+	 * @author ron.pearl
+	 */
 	class removeDefPlayer implements EventHandler<ActionEvent> {
 		@Override
 		public void handle(ActionEvent e) {
@@ -353,8 +414,12 @@ public class TestPlayerManager extends Application  {
 	}
 	
 	
-	/*
+	/**
+	 * showOffPlayer
+	 * 
 	 * Show the details for the selected offensive player
+	 * 
+	 * @author ron.pearl
 	 */
 	class showOffPlayer implements EventHandler<ActionEvent> {
 		@Override
@@ -388,8 +453,12 @@ public class TestPlayerManager extends Application  {
 	}
 	
 	
-	/*
+	/**
+	 * showDefPlayer
+	 * 
 	 * Show the details for the selected defensive player
+	 * 
+	 * @author ron.pearl
 	 */
 	class showDefPlayer implements EventHandler<ActionEvent> {
 		@Override
@@ -418,7 +487,13 @@ public class TestPlayerManager extends Application  {
 		}
 	}
 	
-	
+	/**
+	 * addOffPlayerToMyTeam
+	 * 
+	 * Adds an offensive player to myTeam
+	 * 
+	 * @author ron.pearl
+	 */
 	class addOffPlayerToMyTeam implements EventHandler<ActionEvent> {
 		@Override
 		public void handle(ActionEvent e) {
@@ -449,6 +524,13 @@ public class TestPlayerManager extends Application  {
 		}
 	}
 	
+	/**
+	 * addDefPlayerToMyTeam
+	 * 
+	 * Adds a defensive player to myTeam
+	 * 
+	 * @author ron.pearl
+	 */
 	class addDefPlayerToMyTeam implements EventHandler<ActionEvent> {
 		@Override
 		public void handle(ActionEvent e) {
