@@ -13,4 +13,8 @@ Properly handle user input, and provide feedback on wrong options and characters
 
 Create an Opening that will show a logo of your application. Make use of the Graphics API.
 
+<<<<<<< HEAD
 User should be able to search and see list of players for each position, pick players, see his or her current roster, and delete a player from the roster.
+=======
+User should be able to search and see list of players for each position, pick players, see his or her current roster, and delete a player from the roster.
+>>>>>>> f0c082d025b3ff9363173d8ccd34de64309005a2
