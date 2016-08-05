@@ -3,6 +3,8 @@ import java.util.ArrayList;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.Scene; 
 import javafx.scene.control.Button;
@@ -162,7 +164,8 @@ public class TestPlayerManager extends Application  {
 		hBox.getChildren().add(hGrid);
 		
 		// Set action for search button
-		searchPlayerButton.setOnAction(e -> searchPlayers());
+		searchPlayers searchHandler = new searchPlayers();
+		searchPlayerButton.setOnAction(searchHandler);
 		
 		return hBox;
 	}
@@ -191,8 +194,10 @@ public class TestPlayerManager extends Application  {
 		vBox.getChildren().add(removeDefPlayerError);
 				
 		// Set handler for removePlayer button
-		btnOffRemove.setOnAction(e -> removeOffPlayer());
-		btnDefRemove.setOnAction(e -> removeDefPlayer());
+		removeOffPlayer removeOffPlayerHandler = new removeOffPlayer();
+		removeDefPlayer removeDefPlayerHandler = new removeDefPlayer();
+		btnOffRemove.setOnAction(removeOffPlayerHandler);
+		btnDefRemove.setOnAction(removeDefPlayerHandler);
 				
 		return vBox; 
 	}
@@ -216,8 +221,10 @@ public class TestPlayerManager extends Application  {
 		vBox.getChildren().add(viewDefPlayerError);
 		
 		// Set handlers on buttons
-		btnViewOffPlayer.setOnAction(e -> showOffPlayer());
-		btnViewDefPlayer.setOnAction(e -> showDefPlayer());
+		showOffPlayer showOffPlayerHandler = new showOffPlayer();
+		showDefPlayer showDefPlayerHandler = new showDefPlayer();
+		btnViewOffPlayer.setOnAction(showOffPlayerHandler);
+		btnViewDefPlayer.setOnAction(showDefPlayerHandler);
 		
 		return vBox; 
 	}
@@ -268,187 +275,212 @@ public class TestPlayerManager extends Application  {
 		vBox.getChildren().add(grid);
 		
 		// Set handlers on buttons
-		addOffPlayerBtn.setOnAction(e -> addOffPlayerToMyTeam());
-		addDefPlayerBtn.setOnAction(e -> addDefPlayerToMyTeam());
+		addOffPlayerToMyTeam addOffPlayerToMyTeamHandler = new addOffPlayerToMyTeam();
+		addDefPlayerToMyTeam addDefPlayerToMyTeamHandler = new addDefPlayerToMyTeam();
+		addOffPlayerBtn.setOnAction(addOffPlayerToMyTeamHandler);
+		addDefPlayerBtn.setOnAction(addDefPlayerToMyTeamHandler);
 		
 		return vBox; 
 	}
 	
-	private void searchPlayers() {
-		// Get search params
-		String searchName = playerSearchBox.getText();
-		String searchTeam = (String) selectTeamBox.getSelectionModel().getSelectedItem();
-		String searchPosition = (String) selectPositionBox.getSelectionModel().getSelectedItem();
-		
-		ObservableList<String> searchOffList = doPlayerManager.createSearchOffenseObservableList(searchName, searchTeam, searchPosition);
-		ObservableList<String> searchDefList = doPlayerManager.createSearchDefenseObservableList(searchName, searchTeam, searchPosition);
-		availOffPlayerList.setItems(searchOffList);
-		availDefPlayerList.setItems(searchDefList);
-	}
-	
-	private void removeOffPlayer() {
-		// Make sure a player is selected to be removed
-		if (offenseTeamList.getSelectionModel().getSelectedIndex() == -1) {
-			removeOffPlayerError.setText("Please select a player");
-		} else {
-			// Reset Labels
-			resetLabels();
-						
-			// Get the selected players name
-			String[] parts = offenseTeamList.getSelectionModel().getSelectedItem().split(" - ");
+	class searchPlayers implements EventHandler<ActionEvent> {
+		@Override
+		public void handle(ActionEvent e) {
+			// Get search params
+			String searchName = playerSearchBox.getText();
+			String searchTeam = (String) selectTeamBox.getSelectionModel().getSelectedItem();
+			String searchPosition = (String) selectPositionBox.getSelectionModel().getSelectedItem();
 			
-			// Add player to available list
-			doPlayerManager.addOffPlayer(myTeam.getOffPlayerObject(parts[1]));
-			
-			// Remove player from our team
-			int playerIndexToRemove = offenseTeamList.getSelectionModel().getSelectedIndex();
-			myTeam.removeOffPlayer(playerIndexToRemove);
-			
-			// Fill Player Lists
-			fillPlayerLists();
-			
-			removeOffPlayerError.setText("Player Removed");
+			ObservableList<String> searchOffList = doPlayerManager.createSearchOffenseObservableList(searchName, searchTeam, searchPosition);
+			ObservableList<String> searchDefList = doPlayerManager.createSearchDefenseObservableList(searchName, searchTeam, searchPosition);
+			availOffPlayerList.setItems(searchOffList);
+			availDefPlayerList.setItems(searchDefList);
 		}
 	}
 	
-	private void removeDefPlayer() {
-		// Make sure a player is selected to be removed
-		if (defenseTeamList.getSelectionModel().getSelectedIndex() == -1) {
-			removeDefPlayerError.setText("Please select a player");
-		} else {
-			// Reset Labels
-			resetLabels();
-			
-			// Get the selected players name
-			String[] parts = defenseTeamList.getSelectionModel().getSelectedItem().split(" - ");
-			
-			// Add player to available list
-			doPlayerManager.addDefPlayer(myTeam.getDefPlayerObject(parts[1]));
-			
-			// remove the player
-			int playerIndexToRemove = defenseTeamList.getSelectionModel().getSelectedIndex();
-			myTeam.removeDefPlayer(playerIndexToRemove);
-			
-			// Fill Player Lists
-			fillPlayerLists();
-			
-			removeDefPlayerError.setText("Player Removed");
+	class removeOffPlayer implements EventHandler<ActionEvent> {
+		@Override
+		public void handle(ActionEvent e) {
+			// Make sure a player is selected to be removed
+			if (offenseTeamList.getSelectionModel().getSelectedIndex() == -1) {
+				removeOffPlayerError.setText("Please select a player");
+			} else {
+				// Reset Labels
+				resetLabels();
+							
+				// Get the selected players name
+				String[] parts = offenseTeamList.getSelectionModel().getSelectedItem().split(" - ");
+				
+				// Add player to available list
+				doPlayerManager.addOffPlayer(myTeam.getOffPlayerObject(parts[1]));
+				
+				// Remove player from our team
+				int playerIndexToRemove = offenseTeamList.getSelectionModel().getSelectedIndex();
+				myTeam.removeOffPlayer(playerIndexToRemove);
+				
+				// Fill Player Lists
+				fillPlayerLists();
+				
+				removeOffPlayerError.setText("Player Removed");
+			}
 		}
 	}
-
+	
+	class removeDefPlayer implements EventHandler<ActionEvent> {
+		@Override
+		public void handle(ActionEvent e) {
+			// Make sure a player is selected to be removed
+			if (defenseTeamList.getSelectionModel().getSelectedIndex() == -1) {
+				removeDefPlayerError.setText("Please select a player");
+			} else {
+				// Reset Labels
+				resetLabels();
+				
+				// Get the selected players name
+				String[] parts = defenseTeamList.getSelectionModel().getSelectedItem().split(" - ");
+				
+				// Add player to available list
+				doPlayerManager.addDefPlayer(myTeam.getDefPlayerObject(parts[1]));
+				
+				// remove the player
+				int playerIndexToRemove = defenseTeamList.getSelectionModel().getSelectedIndex();
+				myTeam.removeDefPlayer(playerIndexToRemove);
+				
+				// Fill Player Lists
+				fillPlayerLists();
+				
+				removeDefPlayerError.setText("Player Removed");
+			}
+		}
+	}
+	
 	
 	/*
 	 * Show the details for the selected offensive player
 	 */
-	private void showOffPlayer() {
-		if (availOffPlayerList.getSelectionModel().getSelectedIndex() == -1) {
-			viewOffPlayerError.setText("Please select a player");
-		} else {
-			addDefPlayerBtn.setVisible(false);
-			// Reset Labels
-			resetLabels();
-			
-			// Get the selected player and split up the string to pull the name out
-			String[] parts = availOffPlayerList.getSelectionModel().getSelectedItem().split(" - ");
-			
-			OffensivePlayer playerToView = doPlayerManager.getOffPlayerObject(parts[1]);
-			
-			playerMainInfo.setText(String.valueOf(playerToView.playerNum) + " - " + playerToView.playerName);
-			playerPosAndTeam.setText(playerToView.playerPosition + " for " + playerToView.playerTeam);
-			receptions.setText("Receptions: " + String.valueOf(playerToView.receptions));
-			fieldGoalsMade.setText("Field Goals: " + String.valueOf(playerToView.fieldGoalsMade));
-			carries.setText("Carries: " + String.valueOf(playerToView.carries));
-			yardsPerCarry.setText("Yds Per Carry: " + String.valueOf(playerToView.yardsPerCarry));
-			rushingYards.setText("Rushing Yds: " + String.valueOf(playerToView.rushingYards));
-			touchdowns.setText("Touchdowns: " + String.valueOf(playerToView.touchdowns));
-			yardsPerPass.setText("Yds Per Pass: " + String.valueOf(playerToView.yardsPerPass));
-			yardsPerReception.setText("Yds Per Reception: " + String.valueOf(playerToView.yardsPerReception));
-			
-			addOffPlayerBtn.setVisible(true);
+	class showOffPlayer implements EventHandler<ActionEvent> {
+		@Override
+		public void handle(ActionEvent e) {
+			if (availOffPlayerList.getSelectionModel().getSelectedIndex() == -1) {
+				viewOffPlayerError.setText("Please select a player");
+			} else {
+				addDefPlayerBtn.setVisible(false);
+				// Reset Labels
+				resetLabels();
+				
+				// Get the selected player and split up the string to pull the name out
+				String[] parts = availOffPlayerList.getSelectionModel().getSelectedItem().split(" - ");
+				
+				OffensivePlayer playerToView = doPlayerManager.getOffPlayerObject(parts[1]);
+				
+				playerMainInfo.setText(String.valueOf(playerToView.playerNum) + " - " + playerToView.playerName);
+				playerPosAndTeam.setText(playerToView.playerPosition + " for " + playerToView.playerTeam);
+				receptions.setText("Receptions: " + String.valueOf(playerToView.receptions));
+				fieldGoalsMade.setText("Field Goals: " + String.valueOf(playerToView.fieldGoalsMade));
+				carries.setText("Carries: " + String.valueOf(playerToView.carries));
+				yardsPerCarry.setText("Yds Per Carry: " + String.valueOf(playerToView.yardsPerCarry));
+				rushingYards.setText("Rushing Yds: " + String.valueOf(playerToView.rushingYards));
+				touchdowns.setText("Touchdowns: " + String.valueOf(playerToView.touchdowns));
+				yardsPerPass.setText("Yds Per Pass: " + String.valueOf(playerToView.yardsPerPass));
+				yardsPerReception.setText("Yds Per Reception: " + String.valueOf(playerToView.yardsPerReception));
+				
+				addOffPlayerBtn.setVisible(true);
+			}
 		}
 	}
+	
 	
 	/*
 	 * Show the details for the selected defensive player
 	 */
-	private void showDefPlayer() {
-		if (availDefPlayerList.getSelectionModel().getSelectedIndex() == -1) {
-			viewDefPlayerError.setText("Please select a player");
-		} else {
-			addOffPlayerBtn.setVisible(false);
-			// Reset Labels
-			resetLabels();
-			
-			// Get the selected player and split up the string to pull the name out
-			String[] parts = availDefPlayerList.getSelectionModel().getSelectedItem().split(" - ");
-			
-			DefensivePlayer playerToView = doPlayerManager.getDefPlayerObject(parts[1]);
-			
-			playerMainInfo.setText(String.valueOf(playerToView.playerNum) + " - " + playerToView.playerName);
-			playerPosAndTeam.setText(playerToView.playerPosition + " for " + playerToView.playerTeam);
-			playerTackles.setText("Tackles: " + playerToView.tackles);
-			playerSacks.setText("Sacks: " + playerToView.sacks);
-			playerSafeties.setText("Safeties: " + playerToView.safeties);
-			playerInterceptions.setText("Interceptions: " + playerToView.interceptions);
-			
-			addDefPlayerBtn.setVisible(true);
-		}
-	}
-	
-	private void addOffPlayerToMyTeam() {
-		try {
-			// Reset Labels
-			resetLabels();
-			
-			// Get the selected players name
-			String[] parts = availOffPlayerList.getSelectionModel().getSelectedItem().split(" - ");
-	
-			// Add player to my team
-			myTeam.addOffPlayer(doPlayerManager.getOffPlayerObject(parts[1]));
-			
-			// remove the player from the available list
-			doPlayerManager.removeOffPlayer(parts[1]);
-			
-			// Fill Player Lists
-			fillPlayerLists();
-			
-			// hide the button
-			addOffPlayerBtn.setVisible(false);
-			
-			// Show celebration
-			celebration.setText( myTeam.getOffPlayerObject(parts[1]).celebrate() );
-		} catch (Exception e) {
-			applicationError.setText("There was a problem adding Offensive Player to your team");
+	class showDefPlayer implements EventHandler<ActionEvent> {
+		@Override
+		public void handle(ActionEvent e) {
+			if (availDefPlayerList.getSelectionModel().getSelectedIndex() == -1) {
+				viewDefPlayerError.setText("Please select a player");
+			} else {
+				addOffPlayerBtn.setVisible(false);
+				// Reset Labels
+				resetLabels();
+				
+				// Get the selected player and split up the string to pull the name out
+				String[] parts = availDefPlayerList.getSelectionModel().getSelectedItem().split(" - ");
+				
+				DefensivePlayer playerToView = doPlayerManager.getDefPlayerObject(parts[1]);
+				
+				playerMainInfo.setText(String.valueOf(playerToView.playerNum) + " - " + playerToView.playerName);
+				playerPosAndTeam.setText(playerToView.playerPosition + " for " + playerToView.playerTeam);
+				playerTackles.setText("Tackles: " + playerToView.tackles);
+				playerSacks.setText("Sacks: " + playerToView.sacks);
+				playerSafeties.setText("Safeties: " + playerToView.safeties);
+				playerInterceptions.setText("Interceptions: " + playerToView.interceptions);
+				
+				addDefPlayerBtn.setVisible(true);
+			}
 		}
 	}
 	
 	
-	private void addDefPlayerToMyTeam() {
-		try {
-			// Reset Labels
-			resetLabels();
-						
-			// Get the selected players name
-			String[] parts = availDefPlayerList.getSelectionModel().getSelectedItem().split(" - ");
-	
-			// Add player to my team
-			myTeam.addDefPlayer(doPlayerManager.getDefPlayerObject(parts[1]));
-			
-			// remove the player from the available list
-			doPlayerManager.removeDefPlayer(parts[1]);
-			
-			// Fill Player Lists
-			fillPlayerLists();
-			
-			// hide the button
-			addDefPlayerBtn.setVisible(false);
-			
-			// Show celebration
-			celebration.setText( myTeam.getDefPlayerObject(parts[1]).celebrate() );
-		} catch (Exception e) {
-			applicationError.setText("There was a problem adding Defensive Player to your team");
+	class addOffPlayerToMyTeam implements EventHandler<ActionEvent> {
+		@Override
+		public void handle(ActionEvent e) {
+			try {
+				// Reset Labels
+				resetLabels();
+				
+				// Get the selected players name
+				String[] parts = availOffPlayerList.getSelectionModel().getSelectedItem().split(" - ");
+		
+				// Add player to my team
+				myTeam.addOffPlayer(doPlayerManager.getOffPlayerObject(parts[1]));
+				
+				// remove the player from the available list
+				doPlayerManager.removeOffPlayer(parts[1]);
+				
+				// Fill Player Lists
+				fillPlayerLists();
+				
+				// hide the button
+				addOffPlayerBtn.setVisible(false);
+				
+				// Show celebration
+				celebration.setText( myTeam.getOffPlayerObject(parts[1]).celebrate() );
+			} catch (Exception ex) {
+				applicationError.setText("There was a problem adding Offensive Player to your team");
+			}
 		}
 	}
+	
+	class addDefPlayerToMyTeam implements EventHandler<ActionEvent> {
+		@Override
+		public void handle(ActionEvent e) {
+			try {
+				// Reset Labels
+				resetLabels();
+							
+				// Get the selected players name
+				String[] parts = availDefPlayerList.getSelectionModel().getSelectedItem().split(" - ");
+		
+				// Add player to my team
+				myTeam.addDefPlayer(doPlayerManager.getDefPlayerObject(parts[1]));
+				
+				// remove the player from the available list
+				doPlayerManager.removeDefPlayer(parts[1]);
+				
+				// Fill Player Lists
+				fillPlayerLists();
+				
+				// hide the button
+				addDefPlayerBtn.setVisible(false);
+				
+				// Show celebration
+				celebration.setText( myTeam.getDefPlayerObject(parts[1]).celebrate() );
+			} catch (Exception ex) {
+				applicationError.setText("There was a problem adding Defensive Player to your team");
+			}
+		}
+	}
+	
 	
 	public static void main(String[] args) {
 		Application.launch(args);
